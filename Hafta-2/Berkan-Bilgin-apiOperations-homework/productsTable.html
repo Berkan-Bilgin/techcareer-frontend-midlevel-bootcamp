@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>table</h1>
+
+    <table border="1" id="productsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>
+            Unit Price
+            <select name="" id="">
+              <option value="0-100">0-100</option>
+              <option value="100-200">100-200</option>
+              <option value="200-300">200-300</option>
+              <option value="300-400">300-400</option>
+              <option value="400-500">400-500</option>
+            </select>
+          </th>
+          <th>Stock</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data -->
+      </tbody>
+    </table>
+  </body>
+
+  <script>
+    axios
+      .get("https://northwind.vercel.app/api/products")
+      .then((response) => {
+        const products = response.data;
+        const tableBody = document.querySelector("#productsTable tbody");
+
+        products.forEach((product) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.unitPrice}</td>
+                <td>${product.unitsInStock}</td>
+                <td>
+                    <button data-id="${product.id}" onclick="deleteProduct(this)">Sil</button>
+                </td>
+            `;
+
+          tableBody.appendChild(row);
+        });
+      })
+      .catch((error) => {
+        console.error("Veri çekilirken bir hata oluştu:", error);
+      });
+
+    function deleteProduct(buttonElement) {
+      const productId = buttonElement.getAttribute("data-id");
+
+      axios
+        .delete(`https://northwind.now.sh/api/products/${productId}`)
+        .then((response) => {
+          buttonElement.closest("tr").remove();
+          console.log(`${productId}. Ürün silindi`);
+        })
+        .catch((error) => {
+          console.error("Ürün silinirken bir hata oluştu:", error);
+        });
+    }
+
+    document.querySelector("select").addEventListener("change", function () {
+      const selectedValue = this.value;
+      const [min, max] = selectedValue.split("-").map(Number);
+
+      document.querySelectorAll("#productsTable tbody tr").forEach((row) => {
+        const unitPriceCell = row.cells[2]; // Unit Price sütunu
+        const unitPrice = parseFloat(unitPriceCell.textContent);
+
+        if (unitPrice >= min && unitPrice <= max) {
+          row.style.display = ""; // Satırı göster
+        } else {
+          row.style.display = "none"; // Satırı gizle
+        }
+      });
+    });
+  </script>
+</html>
