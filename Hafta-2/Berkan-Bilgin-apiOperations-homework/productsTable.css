@@ -1,0 +1,84 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Başlık ve hücreler için kenarlık ve dolgu ayarla */
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+/* Başlık için arka plan rengi ve yazı tipi stilini ayarla */
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Her çift satır için arka plan rengini ayarla */
+tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+/* Satırın üzerine gelindiğinde arka plan rengini ayarla */
+tr:hover {
+  background-color: #ddd;
+}
+
+/* Sil butonu için stil ayarla */
+th button,
+td button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Sil butonunun üzerine gelindiğinde stilini ayarla */
+th button:hover,
+td button:hover {
+  background-color: #da190b;
+}
+
+/* Seçim kutusu için stil ayarla */
+select {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* ID başlığı için genişlik */
+th:nth-child(1) {
+  width: 10%;
+}
+
+/* Name başlığı için genişlik */
+th:nth-child(2) {
+  width: 40%;
+}
+
+/* Unit Price başlığı için genişlik */
+th:nth-child(3) {
+  width: 20%;
+}
+
+/* Stock başlığı için genişlik */
+th:nth-child(4) {
+  width: 20%;
+}
+
+/* Delete başlığı için genişlik */
+th:nth-child(5) {
+  width: 10%;
+  text-align: center;
+}
+
+td:nth-child(5) {
+  text-align: center;
+}
